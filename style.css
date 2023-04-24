@@ -1,0 +1,29 @@
+#game {
+    width: 400px;
+    height: 400px;
+    position: relative;
+    margin: 0 auto;
+  }
+  
+  #basket {
+    width: 80px;
+    height: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: gray;
+    border-radius: 5px;
+  }
+  
+  #ball {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+    border-radius: 50%;
+  }
+  
