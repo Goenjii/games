@@ -1,44 +1,43 @@
-const buttons = document.querySelectorAll(".button");
-const result = document.getElementById("result");
+// get the game board element
+const gameBoard = document.getElementById('game-board');
 
-buttons.forEach(button => {
-  button.addEventListener("click", () => {
-    const playerChoice = button.id;
-    const computerChoice = generateComputerChoice();
-    const winner = getWinner(playerChoice, computerChoice);
-    result.textContent = winner;
-  });
+// set the score
+let score = 0;
+const scoreBoard = document.getElementById('score');
+scoreBoard.innerText = score;
+
+// function to randomly select a hole
+function randomHole() {
+  const holes = document.querySelectorAll('.hole');
+  const randomIndex = Math.floor(Math.random() * holes.length);
+  const hole = holes[randomIndex];
+  return hole;
+}
+
+// function to show the mole
+function showMole() {
+  const hole = randomHole();
+  const mole = hole.querySelector('.mole');
+  mole.style.display = 'block';
+
+  // hide the mole after a random time
+  const randomTime = Math.floor(Math.random() * 1000) + 500;
+  setTimeout(() => {
+    mole.style.display = 'none';
+    // recursively call the function to show the next mole
+    showMole();
+  }, randomTime);
+}
+
+// add event listener to the game board
+gameBoard.addEventListener('click', (event) => {
+  const mole = event.target;
+  if (mole.classList.contains('mole')) {
+    score++;
+    scoreBoard.innerText = score;
+    mole.style.display = 'none';
+  }
 });
 
-function generateComputerChoice() {
-  const choices = ["rock", "paper", "scissors"];
-  const randomIndex = Math.floor(Math.random() * choices.length);
-  return choices[randomIndex];
-}
-
-function getWinner(playerChoice, computerChoice) {
-  if (playerChoice === computerChoice) {
-    return "Tie!";
-  }
-  if (playerChoice === "rock") {
-    if (computerChoice === "scissors") {
-      return "You win!";
-    } else {
-      return "Computer wins!";
-    }
-  }
-  if (playerChoice === "paper") {
-    if (computerChoice === "rock") {
-      return "You win!";
-    } else {
-      return "Computer wins!";
-    }
-  }
-  if (playerChoice === "scissors") {
-    if (computerChoice === "paper") {
-      return "You win!";
-    } else {
-      return "Computer wins!";
-    }
-  }
-}
+// start the game
+showMole();

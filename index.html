@@ -1,19 +1,86 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Rock Paper Scissors</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h1>Rock Paper Scissors</h1>
-    <div id="game">
-      <div id="buttons">
-        <button id="rock" class="button">Rock</button>
-        <button id="paper" class="button">Paper</button>
-        <button id="scissors" class="button">Scissors</button>
-      </div>
-      <div id="result"></div>
-    </div>
-    <script src="script.js"></script>
-  </body>
+<head>
+	<meta charset="utf-8">
+	<title>Rock Paper Scissors Game</title>
+	<style type="text/css">
+		body {
+			font-family: Arial, sans-serif;
+			text-align: center;
+			margin-top: 50px;
+		}
+		h1 {
+			font-size: 36px;
+			margin-bottom: 20px;
+		}
+		button {
+			background-color: #4CAF50; /* Green */
+			border: none;
+			color: white;
+			padding: 15px 32px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 10px 5px;
+			cursor: pointer;
+		}
+		button:hover {
+			background-color: #3e8e41;
+		}
+	</style>
+</head>
+<body>
+	<h1>Rock Paper Scissors Game</h1>
+	<p>Choose your move:</p>
+	<button id="rock">Rock</button>
+	<button id="paper">Paper</button>
+	<button id="scissors">Scissors</button>
+	<p id="result"></p>
+	<script type="text/javascript">
+		var buttons = document.querySelectorAll("button");
+		var playerScore = 0;
+		var computerScore = 0;
+		for (var i = 0; i < buttons.length; i++) {
+			buttons[i].addEventListener("click", function() {
+				var playerSelection = this.id;
+				var computerSelection = computerPlay();
+				var result = playRound(playerSelection, computerSelection);
+				document.getElementById("result").innerHTML = result;
+				document.getElementById("score").innerHTML = "Player: " + playerScore + " Computer: " + computerScore;
+				if (playerScore == 5 || computerScore == 5) {
+					if (playerScore > computerScore) {
+						alert("You win!");
+					} else {
+						alert("You lose!");
+					}
+					playerScore = 0;
+					computerScore = 0;
+				}
+			});
+		}
+		function computerPlay() {
+			var options = ["rock", "paper", "scissors"];
+			var choice = Math.floor(Math.random() * options.length);
+			return options[choice];
+		}
+		function playRound(playerSelection, computerSelection) {
+			if (playerSelection == computerSelection) {
+				return "Tie!";
+			} else if (playerSelection == "rock" && computerSelection == "scissors") {
+				playerScore++;
+				return "You win! Rock beats scissors.";
+			} else if (playerSelection == "paper" && computerSelection == "rock") {
+				playerScore++;
+				return "You win! Paper beats rock.";
+			} else if (playerSelection == "scissors" && computerSelection == "paper") {
+				playerScore++;
+				return "You win! Scissors beats paper.";
+			} else {
+				computerScore++;
+				return "You lose! " + computerSelection + " beats " + playerSelection + ".";
+			}
+		}
+	</script>
+</body>
 </html>
