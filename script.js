@@ -1,25 +1,44 @@
-const ball = document.getElementById('ball');
-const basket = document.getElementById('basket');
-let score = 0;
+const buttons = document.querySelectorAll(".button");
+const result = document.getElementById("result");
 
-ball.addEventListener('click', () => {
-  score++;
-  document.title = `Score: ${score}`;
-  ball.style.top = '0';
-  ball.style.left = `${Math.floor(Math.random() * 300) + 50}px`;
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    const playerChoice = button.id;
+    const computerChoice = generateComputerChoice();
+    const winner = getWinner(playerChoice, computerChoice);
+    result.textContent = winner;
+  });
 });
 
-setInterval(() => {
-  const ballTop = parseInt(ball.style.top);
-  const basketLeft = parseInt(basket.style.left);
-  if (ballTop > 380 && ballTop < 400 && basketLeft > 170 && basketLeft < 230) {
-    score++;
-    document.title = `Score: ${score}`;
-    ball.style.top = '0';
-    ball.style.left = `${Math.floor(Math.random() * 300) + 50}px`;
-  } else if (ballTop > 400) {
-    alert(`Game over! Your score is ${score}`);
-    score = 0;
-    document.title = 'Catch the Ball';
+function generateComputerChoice() {
+  const choices = ["rock", "paper", "scissors"];
+  const randomIndex = Math.floor(Math.random() * choices.length);
+  return choices[randomIndex];
+}
+
+function getWinner(playerChoice, computerChoice) {
+  if (playerChoice === computerChoice) {
+    return "Tie!";
   }
-}, 10);
+  if (playerChoice === "rock") {
+    if (computerChoice === "scissors") {
+      return "You win!";
+    } else {
+      return "Computer wins!";
+    }
+  }
+  if (playerChoice === "paper") {
+    if (computerChoice === "rock") {
+      return "You win!";
+    } else {
+      return "Computer wins!";
+    }
+  }
+  if (playerChoice === "scissors") {
+    if (computerChoice === "paper") {
+      return "You win!";
+    } else {
+      return "Computer wins!";
+    }
+  }
+}
